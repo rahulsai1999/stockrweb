@@ -1,23 +1,29 @@
 <html>
     <head>
+        <title>TESLA (TSLA)</title>
         <link rel="stylesheet" href="public/bootstrap-custom.css" />
         <link href="https://fonts.googleapis.com/css?family=Poppins" rel="stylesheet">
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
         <script src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.23.0/moment-with-locales.min.js'></script>
         <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js'></script>
         <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+        <script src='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.js'></script>
+        <script src="public/awesomplete.js" async></script>
+        <link rel="stylesheet" href="public/awesomplete.css">
         <style>
             body{
                 font-family: 'Poppins', sans-serif;
             }
         </style>
+        
         <script type="text/javascript">
         
             google.charts.load('current', {'packages':['corechart']});
             google.charts.setOnLoadCallback(drawChart);
             function drawChart () {
                 $.ajax({
-                    url: "https://api.iextrading.com/1.0/stock/tsla/chart/1m",
+                    // url: "https://api.iextrading.com/1.0/stock/tsla/chart/1m",
+                    url:"https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=NSE:NTPC&interval=5min&apikey=T69K620H31T06293",
                     dataType: "json",
                     success: function (jsonData) {
                         var data = new google.visualization.DataTable();
@@ -28,13 +34,17 @@
                         data.addColumn('number', 'close');
                         data.addColumn('number', 'high');
     
-                        for (var i = 0; i < jsonData.length; i++) {
-                            data.addRow([jsonData[i].label, jsonData[i].low,jsonData[i].open,jsonData[i].close,jsonData[i].high]);
-                        }
+                        // for (var i = 0; i < jsonData.length; i++) {
+                        //     data.addRow([jsonData[i].label, jsonData[i].low,jsonData[i].open,jsonData[i].close,jsonData[i].high]);
+                        // }
+                        $.each(jsonData["Time Series (5min)"], function(i, item) {
+                            console.log(jsonData["Time Series (5min)"][i]['1. open']);
+                        });
     
                         var options = {
                         legend: 'none',
-                        bar: { groupWidth: '100%' }, // Remove space between bars.
+                        backgroundColor:'white',
+                        bar: { groupWidth: '70%' }, // Remove space between bars.
                         candlestick: {
                             fallingColor: { strokeWidth: 0, fill: '#a52714' }, // red
                             risingColor: { strokeWidth: 0, fill: '#0f9d58' }   // green
@@ -47,7 +57,7 @@
                 });
             }
         </script>
-        <title>TESLA (TSLA) </title>
+
     </head>
     <body>
      
@@ -87,28 +97,23 @@
             </div>
         </nav>
         
-        <div style="text-align: center;margin: 2.5%;color:crimson" id="datetime"></div>
         
+        <div style="text-align: center;margin: 2.5%;color:crimson" id="datetime"></div>
         
         <div class="container">
             <br>
             <div class="row">
                 <div class="col"><h5 style="text-align:center">Tesla</h5></div>
                 <div class="col"><h5 style="text-align:center">TSLA</h5></div>
-                <div class="col"><h5 style="text-align:center">456.67 <i style="color: green" class="fa fa-arrow-up" aria-hidden="true"></i></fa></h5></div>
+                <div class="col"><h5 style="text-align:center">456.67 <i style="color: green" class="fa fa-arrow-up" aria-hidden="true"></i></h5></div>
             </div>
             <br><br>
-
-           
             
-            <div class="row">
-                <div class="col-xl"><div id="chart_div" style="width: 100%;height: 100%"></div></div>
-            </div>
+            <div id="chart_div" style="width: 100%;height: 100%"></div>
+
+            
         </div>
             
-              
-            
-        
         
         <!-- timer js -->
         <script>
@@ -119,8 +124,7 @@
             })();
             setInterval(update, 1000);
 
-        </script> 
-        
+        </script>
         
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
