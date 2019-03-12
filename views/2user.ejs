@@ -1,14 +1,14 @@
 <%include partials/headera.ejs%>
 
-<div class="container">
-            <form class="form-signin" action="/searchstock" method="POST">
+<div class="container h-40 d-flex justify-content-center">
+            <form class="form-inline" action="/searchstock" method="POST">
               <div class="form">
                 <input type="text" class="form-control" placeholder="Company Name" name="query" required autofocus>
               </div>
-              <button class="btn btn-lg btn-success text-uppercase" type="submit">Search</button>
+              <button class="btn btn-success" type="submit">Search</button>
               <br><hr><br>
             </form>
-            </div>
+</div>
 
 <%if(currentUser.stocks.length!=0){%>
     <%for(var i=0;i<currentUser.stocks.length;++i){%>
