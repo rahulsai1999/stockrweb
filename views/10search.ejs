@@ -7,8 +7,16 @@
 
 <%if(found.length!=0){%>
     <%for(var i=0;i<found.length;++i){%>
-        <p><%=found[i]["Name"]%></p>
+        <div class="card">
+        <h5 class="card-header"><%=found[i]["Ticker"]%></h5>
+        <div class="card-body">
+        <h5 class="card-title"><%=found[i]["Name"]%></h5>
+        <%var url="/addstock/"+found[i]["Ticker"]%>
+        <a href="<%=url%>" class="btn btn-primary">Add</a>
+        </div>
+        </div>
     <%}%>
 <%}%>
+
 
 <% include partials/footer.ejs%>

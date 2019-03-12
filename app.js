@@ -9,6 +9,7 @@ var localStrategy = require("passport-local");
 var passportLocalMongoose = require("passport-local-mongoose");
 var methodOverride = require("method-override");
 var companydata = require('./public/csvjson.json')
+var _=require("lodash");
 var app=express();
 
 mongoose.connect("mongodb://localhost:27017/stockrtest",{ useNewUrlParser: true });
@@ -70,7 +71,7 @@ app.get("/tutorials",isLoggedIn,function(req,res){
 });
 
 app.post("/searchstock",function(req,res){
-    var se=req.body.query;
+    var se=_.startCase(req.body.query);
     var founddata=[];
     for(var i=0;i<companydata.length;++i)
     {
