@@ -85,7 +85,7 @@ app.get("/movies",function(req,res){
 
 //auth
 app.get("/login",function(req,res){
-    res.render("login");
+    res.render("3login");
 });
 
 app.get("/signup",function(req,res){
