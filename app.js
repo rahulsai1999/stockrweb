@@ -9,6 +9,9 @@ var localStrategy = require("passport-local");
 var passportLocalMongoose = require("passport-local-mongoose");
 var methodOverride = require("method-override");
 var app=express();
+var IEXClient=require("iex-api").IEXClient;
+var _fetch=require("isomorphic-fetch");
+const iex = new IEXClient(_fetch);
 
 mongoose.connect("mongodb://localhost:27017/stockrtest",{ useNewUrlParser: true });
 
@@ -69,12 +72,14 @@ app.get("/tutorials",isLoggedIn,function(req,res){
 });
 
 app.post("/addstock",isLoggedIn,function(req,res){
-    User.findById(curu.id,function(err,user){
+    var ticker=req.body.ticker;
+    console.log(req.user.id);
+    User.findOne({_id:req.user.id},function(err,founduser){
         if(err)
         console.log(err);
         else{
-            user.stocks.push(ticker);
-            User.findOneAndUpdate({id:curu.id},user,function(err,usern){
+            founduser.stocks.push(ticker);
+            User.findOneAndUpdate({_id:req.user.id},founduser,function(err,usern){
                 if(err)
                 console.log(err);
                 else
