@@ -36,6 +36,7 @@ app.use(function(req,res,next){
   res.locals.currentUser = req.user;
   next();
 })
+
 //---------------------------------------------------------------//
 var locat,exx,url="";
 var url1="https://www.googleapis.com/books/v1/volumes?q=";
@@ -51,12 +52,20 @@ app.get("/",function(req,res){
     if(curu)
     res.redirect("/main")
     else{
-    res.render("home");
+    res.render("1home");
     }
 });
 
 app.get("/main",isLoggedIn,function(req,res){
-    res.render("main");
+    res.render("2user");
+});
+
+app.get("/about",function(req,res){
+    res.render("8about");
+});
+
+app.get("/tutorials",isLoggedIn,function(req,res){
+    res.render("7tutorial");
 });
 
 
@@ -88,16 +97,16 @@ app.get("/login",function(req,res){
     res.render("3login");
 });
 
-app.get("/signup",function(req,res){
-    res.render("signup")
+app.get("/register",function(req,res){
+    res.render("4register")
 })
 
 app.post("/register",function(req,res){
     User.register(new User(
     {   
     username:req.body.username,
-    email:req.body.emaill,
-    DOB:req.body.birthday,
+    email:req.body.email,
+    DOB:req.body.dob,
     name:req.body.name
     }),
     req.body.password,
@@ -106,7 +115,7 @@ app.post("/register",function(req,res){
             {
                 console.log(err);
                 alert("Username already taken or Password not valid")
-                res.render("signup");
+                res.render("4register");
             }
         passport.authenticate("local")(req,res,function(){
             res.redirect("/login");
@@ -143,7 +152,7 @@ app.get("*",function(req,res){
 //server
 var server = http.createServer(app);
 
-var port = 3000;//process.env.PORT;//3000;
+var port = 3000;//process.env.PORT;
 app.set('port', port);
 server.listen(port,function(err,suc){
     if(!err)

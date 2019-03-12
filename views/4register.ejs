@@ -1,0 +1,46 @@
+<%include partials/header.ejs%>
+<div class="row justify-content-center">
+<div class="col-md-6">
+<div class="card">
+<header class="card-header">
+	<h4 class="card-title mt-2 text-center">Sign up</h4>
+</header>
+<article class="card-body">
+<form action="/register" method="POST">
+	<div class="form-row">
+		<div class="col form-group">
+			<label>Name</label>   
+		  	<input type="text" class="form-control" placeholder="" name="name">
+		</div> <!-- form-group end.// -->
+		<div class="col form-group">
+			<label>Date of Birth</label>
+		  	<input type="date" class="form-control" placeholder=" " name="dob">
+		</div> <!-- form-group end.// -->
+	</div> <!-- form-row end.// -->
+	<div class="form-row">
+		<div class="col form-group">
+			<label>Email</label>   
+		  	<input type="email" class="form-control" placeholder="" name="email">
+		</div> <!-- form-group end.// -->
+		<div class="col form-group">
+			<label>Username</label>
+		  	<input type="username" class="form-control" placeholder=" " name="username">
+		</div> <!-- form-group end.// -->
+	</div> <!-- form-group end.// -->
+	<div class="form-group">
+		<label>Create password</label>
+	    <input class="form-control" type="password" name="password">
+	</div> <!-- form-group end.// -->  
+	<br>
+    <div class="form-group">
+        <button type="submit" class="btn btn-info btn-block"> Sign Up  </button>
+    </div> <!-- form-group// -->      
+    <small class="text" style="align:center">By clicking the 'Sign Up' button, you confirm that you accept our Terms of use and Privacy Policy.</small>                                          
+</form>
+</article> <!-- card-body end .// -->
+<div class="border-top card-body text-center">Have an account? <a href="/login">Log In</a></div>
+</div> <!-- card.// -->
+</div> <!-- col.//-->
+
+</div>
+<%include partials/footer.ejs%>
