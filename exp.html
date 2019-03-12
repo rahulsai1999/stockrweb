@@ -22,7 +22,7 @@
             google.charts.setOnLoadCallback(drawChart);
             function drawChart () {
                 $.ajax({
-                    url:"https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=TSLA&interval=5min&apikey=T69K620H31T06293",
+                    url:"https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=NSE:COALINDIA&interval=5min&apikey=T69K620H31T06293",
                     dataType: "json",
                     success: function (jsonData) {
                         var data = new google.visualization.DataTable();
@@ -107,8 +107,43 @@
                 <div class="col"><h5 style="text-align:center">456.67 <i style="color: green" class="fa fa-arrow-up" aria-hidden="true"></i></h5></div>
             </div>
             <br><br>
+            <div class="row">
+                <div class="col-10"><div id="chart_div" style="width: 100%;height: 600px"></div></div>
+                <div class="col-2">
+                    <div class="row">
+                        <div class="card border-primary text-center text-white mb-3" style="width:300px">
+                            <div class="card-header">Prediction</div>
+                                <div class="card-body">
+                                    <h5 class="card-title">178.65</h5>
+                                    <p class="card-text"></p>
+                                </div>
+                            </div>
+                        </div>
+                    <div class="row">
+                        <div class="card text-center" style="color:white;width:300px">
+                            <div class="card-header">
+                              Company Analysis
+                            </div>
+                            <ul class="list-group list-group-flush">
+                              <li class="list-group-item">Positive : 34%</li>
+                              <li class="list-group-item">Negative : 12%</li>
+                            </ul>
+                          </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="card text-center text-white bg-success mb-3" style="width:300px">
+                            <div class="card-header">Final Suggestion</div>
+                            <div class="card-body">
+                              <h5 class="card-title">BUY</h5>
+                              <p class="card-text"></p>
+                            </div>
+                          </div>
+                    </div>
+                </div>
+            </div>
             
-            <div id="chart_div" style="width: 100%;height: 100%"></div>
+            
 
             
         </div>

@@ -1,9 +1,6 @@
 var express=require("express");
 var http=require("http");
-var Review = require("./models/review");
 var User = require("./models/user");
-var Book = require("./models/book");
-var Movie = require("./models/movie");
 var mongoose = require("mongoose");
 var request=require("request");
 var bodyParser=require("body-parser");
@@ -13,7 +10,7 @@ var passportLocalMongoose = require("passport-local-mongoose");
 var methodOverride = require("method-override");
 var app=express();
 
-mongoose.connect("mongodb://localhost:27017/bookrev_sample",{ useNewUrlParser: true });
+mongoose.connect("mongodb://localhost:27017/stockrtest",{ useNewUrlParser: true });
 
 app.use(methodOverride("_method"));
 app.use(express.static("public"));
@@ -62,9 +59,6 @@ app.get("/main",isLoggedIn,function(req,res){
     res.render("main");
 });
 
-app.get("/select",isLoggedIn,function(req,res){
-   res.render("select"); 
-});
 
 app.get("/books",function(req,res){
     Book.find({}).populate("reviews").exec(function(err,book){
@@ -100,9 +94,11 @@ app.get("/signup",function(req,res){
 
 app.post("/register",function(req,res){
     User.register(new User(
-    {username:req.body.username,
-        email:req.body.emaill,
-        DOB:req.body.birthday
+    {   
+    username:req.body.username,
+    email:req.body.emaill,
+    DOB:req.body.birthday,
+    name:req.body.name
     }),
     req.body.password,
         function(err,user){
@@ -148,6 +144,8 @@ app.get("*",function(req,res){
 var server = http.createServer(app);
 
 var port = 3000;//process.env.PORT;//3000;
-  app.set('port', port);
-
-server.listen(port);
+app.set('port', port);
+server.listen(port,function(err,suc){
+    if(!err)
+    console.log("Server started");
+});
