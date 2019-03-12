@@ -68,6 +68,24 @@ app.get("/tutorials",isLoggedIn,function(req,res){
     res.render("7tutorial");
 });
 
+app.post("/addstock",isLoggedIn,function(req,res){
+    User.findById(curu.id,function(err,user){
+        if(err)
+        console.log(err);
+        else{
+            user.stocks.push(ticker);
+            User.findOneAndUpdate({id:curu.id},user,function(err,usern){
+                if(err)
+                console.log(err);
+                else
+                {
+                    console.log(usern);
+                    res.redirect("/main");
+                }    
+            });
+        }
+    });
+});
 
 app.get("/books",function(req,res){
     Book.find({}).populate("reviews").exec(function(err,book){
