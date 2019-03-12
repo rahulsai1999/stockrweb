@@ -1,0 +1,14 @@
+<% include partials/header.ejs%>
+
+<%if(found.length==0){%>
+    <p>No companies found</p>
+    <a href="/main">Go back</a>
+<%}%>
+
+<%if(found.length!=0){%>
+    <%for(var i=0;i<found.length;++i){%>
+        <p><%=found[i]["Name"]%></p>
+    <%}%>
+<%}%>
+
+<% include partials/footer.ejs%>

@@ -8,10 +8,8 @@ var passport = require("passport");
 var localStrategy = require("passport-local");
 var passportLocalMongoose = require("passport-local-mongoose");
 var methodOverride = require("method-override");
+var companydata = require('./public/csvjson.json')
 var app=express();
-var IEXClient=require("iex-api").IEXClient;
-var _fetch=require("isomorphic-fetch");
-const iex = new IEXClient(_fetch);
 
 mongoose.connect("mongodb://localhost:27017/stockrtest",{ useNewUrlParser: true });
 
@@ -42,8 +40,8 @@ app.use(function(req,res,next){
 
 //---------------------------------------------------------------//
 var locat,exx,url="";
-var url1="https://www.googleapis.com/books/v1/volumes?q=";
-var url2="https://www.googleapis.com/books/v1/volumes?q=isbn:";
+var url1="https://api.iextrading.com/1.0/stock/"
+var url2="/company";
 var url3="http://www.omdbapi.com/?apikey=thewdb&s=";
 var url4="http://www.omdbapi.com/?apikey=thewdb&i=";
 
@@ -69,6 +67,39 @@ app.get("/about",function(req,res){
 
 app.get("/tutorials",isLoggedIn,function(req,res){
     res.render("7tutorial");
+});
+
+app.post("/searchstock",function(req,res){
+    var se=req.body.query;
+    var founddata=[];
+    for(var i=0;i<companydata.length;++i)
+    {
+        if(companydata[i]["Name"].includes(se)){
+            founddata.push(companydata[i]);
+        }
+    }
+    res.render("10search",{found:founddata});
+});
+
+app.get("/addstock/:ticker",isLoggedIn,function(req,res){
+    var ticker=req.params.ticker;
+    console.log(req.user.id);
+    User.findOne({_id:req.user.id},function(err,founduser){
+        if(err)
+        console.log(err);
+        else{
+            founduser.stocks.push(ticker);
+            User.findOneAndUpdate({_id:req.user.id},founduser,function(err,usern){
+                if(err)
+                console.log(err);
+                else
+                {
+                    console.log(usern);
+                    res.redirect("/main");
+                }    
+            });
+        }
+    });
 });
 
 app.post("/addstock",isLoggedIn,function(req,res){

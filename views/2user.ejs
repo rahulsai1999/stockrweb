@@ -1,2 +1,8 @@
 <%include partials/headera.ejs%>
+
+<%if(currentUser.stocks.length!=0){%>
+    <%for(var i=0;i<currentUser.stocks.length;++i){%>
+        <p><%=currentUser.stocks[i]%></p>
+    <%}%>
+<%}%>
 <%include partials/footer.ejs%>
