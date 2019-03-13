@@ -43,7 +43,7 @@ app.use(function(req,res,next){
 var locat,exx,url="";
 var url1="https://api.iextrading.com/1.0/stock/"
 var url2="/company";
-var url3="http://www.omdbapi.com/?apikey=thewdb&s=";
+var url3="https://newsapi.org/v2/top-headlines?sources=financial-times&apiKey=a0e21d414ee443c79dbd5e0e3cc16bf6";
 var url4="http://www.omdbapi.com/?apikey=thewdb&i=";
 
 var parsedData={};
@@ -59,7 +59,10 @@ app.get("/",function(req,res){
 });
 
 app.get("/main",isLoggedIn,function(req,res){
-    res.render("2user");
+    request(url3,function(error,response,body){
+        parsedData=JSON.parse(body);
+        res.render("2user",{data:parsedData.articles});
+    });
 });
 
 app.get("/about",function(req,res){
@@ -103,14 +106,16 @@ app.get("/addstock/:ticker",isLoggedIn,function(req,res){
     });
 });
 
-app.post("/addstock",isLoggedIn,function(req,res){
-    var ticker=req.body.ticker;
+app.get("/delstock/:ticker",isLoggedIn,function(req,res){
+    var ticker=req.params.ticker;
     console.log(req.user.id);
     User.findOne({_id:req.user.id},function(err,founduser){
         if(err)
         console.log(err);
         else{
-            founduser.stocks.push(ticker);
+            founduser.stocks = founduser.stocks.filter(function(item) { 
+                return item !== ticker
+            })
             User.findOneAndUpdate({_id:req.user.id},founduser,function(err,usern){
                 if(err)
                 console.log(err);

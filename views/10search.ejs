@@ -1,7 +1,8 @@
 <% include partials/header.ejs%>
+<div class="container justify-content-center">
 
 <%if(found.length==0){%>
-    <p>No companies found</p>
+    <h5>No companies found</h5>
     <a href="/main">Go back</a>
 <%}%>
 
@@ -17,6 +18,6 @@
         </div>
     <%}%>
 <%}%>
-
+</div>
 
 <% include partials/footer.ejs%>

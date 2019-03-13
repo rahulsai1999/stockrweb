@@ -1,18 +1,55 @@
 <%include partials/headera.ejs%>
 
-<div class="container h-40 d-flex justify-content-center">
+<div class="container h-40 d-flex justify-content-center" style="margin-bottom:5%!important;">
             <form class="form-inline" action="/searchstock" method="POST">
               <div class="form">
                 <input type="text" class="form-control" placeholder="Company Name" name="query" required autofocus>
               </div>
               <button class="btn btn-success" type="submit">Search</button>
-              <br><hr><br>
+              <br><hr>
             </form>
 </div>
 
-<%if(currentUser.stocks.length!=0){%>
-    <%for(var i=0;i<currentUser.stocks.length;++i){%>
-        <p><%=currentUser.stocks[i]%></p>
+<div class="container">
+  <h4 style="text-align:center">Watchlist</h4>
+  <br>
+    <div class="card-columns">
+    <%if(currentUser.stocks.length!=0){%>
+        <%for(var i=0;i<currentUser.stocks.length;++i){%>
+            <div class="card mb-4 text-center" style="width: 18rem;">
+            <div class="card-body">
+            <h5 class="card-title"><%=currentUser.stocks[i]%></h5>
+            <a href="/stockview/<%=currentUser.stocks[i]%>" class="btn btn-success btn-sm"><i class="fa fa-eye" aria-hidden="true"></i> View</a>
+            <a href="/delstock/<%=currentUser.stocks[i]%>" class="btn btn-danger btn-sm"><i class="fa fa-times" aria-hidden="true"></i> Remove</a>
+            </div>
+            </div>
+        <%}%>
     <%}%>
-<%}%>
+    </div>
+</div>
+<br>
+<div class="container py-3">
+  <h4 style="text-align:center">Trending</h4>
+  <br>
+  <%for(var i=0;i<data.length;++i){%>
+    <div class="card" style="padding:1%;">
+        <div class="row ">
+          <div class="col-md-4">
+              <img src="<%=data[i].urlToImage%>" class="w-100">
+            </div>
+            <div class="col-md-8 px-3">
+              <div class="card-block px-3">
+                <h5 class="card-title"><%=data[i].title%></h5>
+                <p class="card-text"><%=data[i].publishedAt.slice(0,10)%></p>
+                <p class="card-text"><%=data[i].content%></p>
+                <a href="<%=data[i].url%>" class="btn btn-primary">Read More</a>
+              </div>
+            </div>
+          </div>
+        </div> 
+     <%}%>   
+</div>
+
+
+
 <%include partials/footer.ejs%>
