@@ -18,11 +18,11 @@
         
         <script type="text/javascript">
         
-            google.charts.load('current', {'packages':['corechart']});
+        google.charts.load('current', {'packages':['corechart']});
             google.charts.setOnLoadCallback(drawChart);
             function drawChart () {
                 $.ajax({
-                    url:"https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=NSE:COALINDIA&interval=5min&apikey=T69K620H31T06293",
+                    url: "https://api.iextrading.com/1.0/stock/AAPL/chart/1y",
                     dataType: "json",
                     success: function (jsonData) {
                         var data = new google.visualization.DataTable();
@@ -32,18 +32,15 @@
                         data.addColumn('number', 'open');
                         data.addColumn('number', 'close');
                         data.addColumn('number', 'high');
-                        // for (var i = 0; i < jsonData.length; i++) {
-                        //     data.addRow([jsonData[i].label, jsonData[i].low,jsonData[i].open,jsonData[i].close,jsonData[i].high]);
-                        // }
-                        $.each(jsonData["Time Series (5min)"], function(i, item) {
-                            console.log(jsonData["Time Series (5min)"][i]['1. open']);
-                            data.addRow(['x', parseFloat(jsonData["Time Series (5min)"][i]['3. low']),parseFloat(jsonData["Time Series (5min)"][i]['1. open']),parseFloat(jsonData["Time Series (5min)"][i]['4. close']),parseFloat(jsonData["Time Series (5min)"][i]['2. high'])]);
-                        });
+    
+                        for (var i = 0; i < jsonData.length; i++) {
+                            data.addRow([jsonData[i].label, jsonData[i].low,jsonData[i].open,jsonData[i].close,jsonData[i].high]);
+                        }
     
                         var options = {
                         legend: 'none',
                         backgroundColor:'white',
-                        bar: { groupWidth: '70%' }, // Remove space between bars.
+                        bar: { groupWidth: '50%' }, // Remove space between bars.
                         candlestick: {
                             fallingColor: { strokeWidth: 0, fill: '#a52714' }, // red
                             risingColor: { strokeWidth: 0, fill: '#0f9d58' }   // green

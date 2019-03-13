@@ -42,12 +42,15 @@ app.use(function(req,res,next){
 //---------------------------------------------------------------//
 var locat,exx,url="";
 var url1="https://api.iextrading.com/1.0/stock/"
-var url2="/company";
+var url2="/batch?types=company,delayed-quote";
 var url3="https://newsapi.org/v2/top-headlines?sources=financial-times&apiKey=a0e21d414ee443c79dbd5e0e3cc16bf6";
 var url4="http://www.omdbapi.com/?apikey=thewdb&i=";
+var script1="<script type='text/javascript'> google.charts.load('current', {'packages':['corechart']});google.charts.setOnLoadCallback(drawChart);function drawChart () {$.ajax({url: 'https://api.iextrading.com/1.0/stock/";
+var script2="/chart/1y',dataType: 'json',success: function (jsonData) {var data = new google.visualization.DataTable();data.addColumn('string', 'label');data.addColumn('number', 'low');data.addColumn('number', 'open');data.addColumn('number', 'close');data.addColumn('number', 'high');for (var i = 0; i < jsonData.length; i++) {data.addRow([jsonData[i].label, jsonData[i].low,jsonData[i].open,jsonData[i].close,jsonData[i].high]);}var options = {legend: 'none',backgroundColor:'white',bar: { groupWidth: '50%' },candlestick: {fallingColor: { strokeWidth: 0, fill: '#a52714' }, risingColor: { strokeWidth: 0, fill: '#0f9d58' }}};var chart = new google.visualization.CandlestickChart(document.getElementById('chart_div'));chart.draw(data, options);}});}</script>"
 
 var parsedData={};
 
+app.locals.renderScriptT= function(ticker){return script1+ticker+script2;}
 
 //rest routes
 app.get("/",function(req,res){
@@ -71,6 +74,15 @@ app.get("/about",function(req,res){
 
 app.get("/tutorials",isLoggedIn,function(req,res){
     res.render("7tutorial");
+});
+
+app.get("/stockview/:ticker",isLoggedIn,function(req,res){
+    var ticker=req.params.ticker;
+    url=url1+ticker+url2;
+    request(url,function(error,response,body){
+        parsedData=JSON.parse(body);
+        res.render("6stockview",{ticker:ticker,companydata:parsedData});
+    });
 });
 
 app.post("/searchstock",function(req,res){
