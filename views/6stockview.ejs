@@ -3,14 +3,46 @@
         <div class="container">
             <br>
             <div class="row">
-                <div class="col"><h5 style="text-align:center">Tesla</h5></div>
-                <div class="col"><h5 style="text-align:center">TSLA</h5></div>
-                <div class="col"><h5 style="text-align:center">456.67 <i style="color: green" class="fa fa-arrow-up" aria-hidden="true"></i></h5></div>
+                <div class="col"><h5 style="text-align:center"><%=companydata.company.companyName%></h5></div>
+                <div class="col"><h5 style="text-align:center"><%=companydata.company.symbol%></h5></div>
+                <div class="col"><h5 style="text-align:center"><%=companydata["delayed-quote"]["delayedPrice"]%> <i style="color: green" class="fa fa-arrow-up" aria-hidden="true"></i></h5></div>
+            </div>
+            <div class="container">
+                <div id="demo" class="collapse">
+                <table class="table table-hover table-borderless" style="text-align:center;margin-left:8%;margin-top:2%">
+                <tbody>
+                    <tr>
+                    <td>Sector</td>
+                    <td><%=companydata.company.sector%></td>
+                    </tr>
+                    <tr>
+                    <td>Industry</td>
+                    <td><%=companydata.company.industry%></td>
+                    </tr>
+                    <tr>
+                    <td>CEO</td>
+                    <td><%=companydata.company.CEO%></td>
+                    </tr>
+                    <tr>
+                    <td>Website</td>
+                    <td><a href="<%=companydata.company.website%>"><%=companydata.company.website%></a></td>
+                    </tr>
+                    <tr>
+                    <td>Description</td>
+                    <td><%=companydata.company.description%></td>
+                    </tr>
+                </tbody>
+                </table>
+                </div>   
             </div>
             <br><br>
             <div class="row">
                 <div class="col-10"><div id="chart_div" style="width: 100%;height: 600px"></div></div>
                 <div class="col-2">
+                    <div class="row">
+                        <button class="btn-lg btn-info btn-block" data-toggle="collapse" data-target="#demo">More Details</button>
+                    </div>
+                    <br>
                     <div class="row">
                         <div class="card border-primary text-center text-white mb-3" style="width:300px">
                             <div class="card-header">Prediction</div>
@@ -43,10 +75,29 @@
                     </div>
                 </div>
             </div>
-            
-            
-
-            
+        </div>
+        <br><br>
+        <br><br>
+        <div class="container py-3">
+            <h4 style="text-align:center">Headlines</h4>
+            <br>
+            <%for(var i=0;i<moredata.length;++i){%>
+                <div class="card" style="padding:1%;">
+                    <div class="row ">
+                    <div class="col-md-4">
+                        <img src="<%=moredata[i].image_url%>" class="w-100">
+                        </div>
+                        <div class="col-md-8 px-3">
+                        <div class="card-block px-3">
+                            <h5 class="card-title"><%=moredata[i].title%></h5>
+                            <p class="card-text"><%=moredata[i].date.slice(5,26)%></p>
+                            <p class="card-text"><%=moredata[i].text%></p>
+                            <a href="<%=moredata[i].news_url%>" class="btn btn-primary">Read More</a>
+                        </div>
+                        </div>
+                    </div>
+                    </div> 
+                <%}%>   
         </div>
             
         <%-renderScriptT(ticker)%>
