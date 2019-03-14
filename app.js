@@ -12,8 +12,8 @@ var companydata = require('./public/csvjson.json')
 var _=require("lodash");
 var app=express();
 
-mongoose.connect("mongodb://localhost:27017/stockrtest",{ useNewUrlParser: true });
-
+//mongoose.connect("mongodb://localhost:27017/stockrtest",{ useNewUrlParser: true });
+mongoose.connect("mongodb://admin:admin83@ds159812.mlab.com:59812/loginegapp",{useNewUrlParser:true});
 app.use(methodOverride("_method"));
 app.use(express.static("public"));
 app.use(bodyParser.urlencoded({extended:true}));
