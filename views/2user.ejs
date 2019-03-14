@@ -13,6 +13,9 @@
 <div class="container">
   <h4 style="text-align:center">Watchlist</h4>
   <br>
+    <%if(currentUser.stocks.length==0){%>
+    <h6 style="text-align:center;color:red">No stocks added on watchlist</h6>
+    <%}%>
     <div class="card-columns">
     <%if(currentUser.stocks.length!=0){%>
         <%for(var i=0;i<currentUser.stocks.length;++i){%>
