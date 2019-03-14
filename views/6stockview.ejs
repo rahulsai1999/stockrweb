@@ -47,7 +47,7 @@
                         <div class="card border-primary text-center text-white mb-3" style="width:300px">
                             <div class="card-header">Prediction</div>
                                 <div class="card-body">
-                                    <h5 class="card-title">178.65</h5>
+                                    <h5 class="card-title"><%=parseFloat(preddata).toFixed(2)%></h5>
                                     <p class="card-text"></p>
                                 </div>
                             </div>
@@ -58,8 +58,8 @@
                               Company Analysis
                             </div>
                             <ul class="list-group list-group-flush">
-                              <li class="list-group-item">Positive : 34%</li>
-                              <li class="list-group-item">Negative : 12%</li>
+                              <li class="list-group-item">Positive : <%=Math.round(parseFloat(nlpdata.p*100))%> %</li>
+                              <li class="list-group-item">Negative : <%=Math.round(parseFloat(nlpdata.n*100))%> %</li>
                             </ul>
                           </div>
                     </div>
